@@ -3,8 +3,7 @@ $(document).ready(function () {
   $("form#ourForm").submit(function(event) {
     event.preventDefault();
     var input = $("#field").val();
-    var result = encode(input);
-    $("#result").text(result);
+    encode(input);
     $("#square").show();
   });
 
@@ -14,18 +13,25 @@ $(document).ready(function () {
 function encode(message) {
   var properMessage = message.replace(/[\s\W\d]/gi, "").toLowerCase();
   var messageSquared = Math.ceil(Math.sqrt(properMessage.length));
-  var rows = messageSquared;
-  var columns = messageSquared;
-  var rowIndex = 0;
-  var columnIndex = 0;
   var messageArray = properMessage.split("");
+  var table = document.getElementById("square");
+  var index = 0;
 
-  console.log(messageSquared);
+  for(i = 0; i < messageSquared; i++) {
+    table.insertRow(i);
 
-  while(rowIndex <= rows) {
-    for(i = 0; i < message.length; i++) {
-      $("#square").append("<tr><td>" + messageArray[i] + "</td></tr>");
-      rowIndex += 1;
+  }
+
+  for(i = 0; i < messageSquared; i++) {
+    var row = document.getElementById("square").rows[i];
+    for(j = 0; j < messageSquared; j++) {
+      row.insertCell(j);
     }
   }
+
+  $("td").each(function() {
+    $(this).text(messageArray[index])
+    index++;
+  });
+
 }
